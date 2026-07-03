@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LaiprangBrain & GeminiSearch — Freestyle Zone</title>
+<link rel="icon" type="image/jpeg" href="/assets/logo.jpg" />
+<link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+
+  <div class="app-shell">
+
+    <!-- ===================== Sidebar ===================== -->
+    <aside class="sidebar">
+      <div class="brand">
+        <img src="/assets/logo.jpg" alt="LaiprangBrain" class="brand-mark-img" />
+        <span class="brand-name">LaiprangBrain</span>
+      </div>
+
+      <nav class="nav">
+        <button class="nav-item active" data-view="hub">ศูนย์รวม</button>
+        <button class="nav-item" data-view="post">โพสต์ใหม่</button>
+        <button class="nav-item" data-view="live">ไลฟ์ขายของ</button>
+        <button class="nav-item" data-view="guardian">AI พี่น้อง</button>
+        <button class="nav-item" data-view="membership">สมาชิก</button>
+      </nav>
+
+      <div class="tier-badge" id="tierBadge">Standard</div>
+    </aside>
+
+    <!-- ===================== Main ===================== -->
+    <main class="main">
+
+      <!-- Freestyle Zone banner (signature element) -->
+      <section class="freestyle-banner">
+        <div class="freestyle-text">
+          <span class="eyebrow">FREESTYLE ZONE</span>
+          <h1>พื้นที่อิสระ ทำอะไรก็ได้ตามต้องการ</h1>
+          <p class="rule">กฎเหล็กเพียงข้อเดียว: <strong>ห้ามทำให้ใครเดือดร้อนเป็นอันขาด</strong></p>
+        </div>
+      </section>
+
+      <!-- ===================== View: Hub ===================== -->
+      <section id="view-hub" class="view active">
+        <h2 class="section-title">แพลตฟอร์มของมึง</h2>
+        <div class="platform-grid">
+          <a class="platform-card tiktok" href="#" data-platform="tiktok">
+            <span class="platform-name">TikTok</span>
+            <span class="platform-sub">วิดีโอสั้น</span>
+          </a>
+          <a class="platform-card instagram" href="#" data-platform="instagram">
+            <span class="platform-name">Instagram</span>
+            <span class="platform-sub">รูป / Story / Reels</span>
+          </a>
+          <a class="platform-card facebook" href="#" data-platform="facebook">
+            <span class="platform-name">Facebook</span>
+            <span class="platform-sub">โพสต์ / กลุ่ม</span>
+          </a>
+          <a class="platform-card x" href="#" data-platform="x">
+            <span class="platform-name">X</span>
+            <span class="platform-sub">ทวีต / เทรนด์</span>
+          </a>
+          <a class="platform-card youtube" href="#" data-platform="youtube">
+            <span class="platform-name">YouTube</span>
+            <span class="platform-sub">วิดีโอ / Shorts</span>
+          </a>
+          <a class="platform-card line" href="#" data-platform="line">
+            <span class="platform-name">LINE</span>
+            <span class="platform-sub">แชท / OA แจ้งเตือน</span>
+          </a>
+        </div>
+
+        <div id="platformStatus" class="platform-status"></div>
+      </section>
+
+      <!-- ===================== View: Post ===================== -->
+      <section id="view-post" class="view">
+        <h2 class="section-title">โพสต์ใหม่</h2>
+        <div class="post-box">
+          <textarea id="postText" placeholder="พิมพ์อะไรก็ได้ในหัวมึง... (ทุกโพสต์ผ่าน AI พี่น้องตรวจก่อนเผยแพร่)"></textarea>
+          <div class="post-actions">
+            <button id="submitPost" class="btn btn-primary">โพสต์เลย</button>
+            <button id="selfPromoteBtn" class="btn btn-vip">🚀 โปรโมทตัวเอง (VIP)</button>
+          </div>
+          <div id="postResult" class="result-box"></div>
+        </div>
+      </section>
+
+      <!-- ===================== View: Live Shop ===================== -->
+      <section id="view-live" class="view">
+        <h2 class="section-title">ไลฟ์ขายของ</h2>
+        <p class="section-desc">
+          เปิดไลฟ์ คุยขายของกันเองได้เต็มที่ — เราแค่คอยดูความปลอดภัยของแชท (กันลิงก์หลอกลวง) ให้เท่านั้น
+          ส่วนวิดีโอสดจริงต้องเสียบผู้ให้บริการสตรีมมิ่งเพิ่ม (ดู README)
+        </p>
+
+        <div class="post-box">
+          <input id="liveTitle" type="text" placeholder="ตั้งชื่อไลฟ์ เช่น ไลฟ์ขายเสื้อผ้ามือสอง" class="text-input" />
+          <button id="startLiveBtn" class="btn btn-primary">🔴 เริ่มไลฟ์</button>
+        </div>
+
+        <h3 class="subsection-title">ห้องไลฟ์ที่กำลังเปิดอยู่</h3>
+        <div id="liveList" class="live-list"></div>
+
+        <!-- Live room panel (ซ่อนไว้จนกว่าจะเข้าห้อง) -->
+        <div id="liveRoom" class="live-room hidden">
+          <div class="live-video-placeholder">
+            <span>📹 ช่องวิดีโอสด</span>
+            <small>จุดเสียบ SDK ของผู้ให้บริการสตรีมมิ่ง (Agora / LiveKit / Mux ฯลฯ)</small>
+          </div>
+
+          <div class="live-side">
+            <div class="live-products" id="liveProducts"></div>
+
+            <div class="live-add-product" id="liveAddProductBox">
+              <input id="prodName" type="text" placeholder="ชื่อสินค้า" class="text-input" />
+              <input id="prodPrice" type="number" placeholder="ราคา" class="text-input" />
+              <input id="prodLink" type="text" placeholder="ลิงก์สินค้า (ถ้ามี)" class="text-input" />
+              <button id="addProductBtn" class="btn btn-vip">📌 ปักหมุดสินค้า</button>
+            </div>
+
+            <div class="live-chat" id="liveChatLog"></div>
+            <div class="live-chat-input">
+              <input id="liveChatText" type="text" placeholder="พิมพ์แชท..." class="text-input" />
+              <button id="sendChatBtn" class="btn btn-primary">ส่ง</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== View: Guardian (AI พี่น้อง) ===================== -->
+      <section id="view-guardian" class="view">
+        <h2 class="section-title">AI พี่น้อง — BigBrother / LittleBrother</h2>
+        <p class="section-desc">สแกนภัยคุกคาม (ฟิชชิ่ง / ลิงก์อันตราย) ทุกโพสต์อัตโนมัติ</p>
+
+        <div class="guardian-stats" id="guardianStats">
+          <div class="stat-card">
+            <span class="stat-label">สแกนวันนี้</span>
+            <span class="stat-value" id="statScanned">0</span>
+          </div>
+          <div class="stat-card danger">
+            <span class="stat-label">บล็อกความเสี่ยงสูง</span>
+            <span class="stat-value" id="statBlocked">0</span>
+          </div>
+          <div class="stat-card warn">
+            <span class="stat-label">น่าสงสัย</span>
+            <span class="stat-value" id="statSuspicious">0</span>
+          </div>
+        </div>
+
+        <h3 class="subsection-title">แยกตามประเภทความเสี่ยงที่เจอวันนี้</h3>
+        <div class="hit-breakdown" id="hitBreakdown"></div>
+
+        <h3 class="subsection-title">ประวัติการสแกนล่าสุด</h3>
+        <div class="report-table" id="reportTable"></div>
+
+        <h3 class="subsection-title">รายชื่อที่ถูกส่งให้แอดมินตรวจสอบ (ทำผิดซ้ำ/เสี่ยงร้ายแรง)</h3>
+        <div class="report-table" id="flaggedTable"></div>
+
+        <h3 class="subsection-title">สัญญาณพฤติกรรมผิดปกติ (แจ้งเตือนเฉยๆ ไม่บล็อกอัตโนมัติ)</h3>
+        <div class="report-table" id="anomalyTable"></div>
+
+        <div class="post-box">
+          <textarea id="scanText" placeholder="วางข้อความ/ลิงก์ที่อยากให้ AI พี่น้องตรวจสอบ..."></textarea>
+          <button id="scanBtn" class="btn btn-primary">สแกนเลย</button>
+          <div id="scanResult" class="result-box"></div>
+        </div>
+      </section>
+
+      <!-- ===================== View: Membership ===================== -->
+      <section id="view-membership" class="view">
+        <h2 class="section-title">แพ็กเกจสมาชิก</h2>
+        <div class="tier-grid" id="tierGrid"></div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
