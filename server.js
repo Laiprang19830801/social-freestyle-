@@ -23,7 +23,7 @@ const http = require("http");
 const { MembershipStore, TIERS } = require("./membership");
 const { littleBrotherScan, bigBrotherScan, GuardianStats } = require("./aiGuardian");
 const { LiveShopStore } = require("./liveShop");
-const { SafetyTracker } = require("./safetyTracker");
+const SafetyTracker = require('./safetyTracker');
 const { BehaviorBaseline } = require("./behaviorBaseline");
 
 const app = express();
